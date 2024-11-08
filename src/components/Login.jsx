@@ -1,14 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Login = () => {
 
-    const handleLogin = e =>{
+    const { signInUser } = useContext(AuthContext);
+
+    const handleLogin = e => {
         e.preventDefault();
         const email = e.target.email.value;
         const password = e.target.password.value;
 
         console.log(email, password);
+        signInUser(email, password)
+            .then(result => {
+                console.log(result.user)
+            })
+            .catch(error => {
+                console.log('ERROR', error.message)
+            })
     }
 
     return (
@@ -39,7 +49,7 @@ const Login = () => {
                         </div>
                     </form>
                     <p className='ml-4 mb-4'>
-                        New to this website? please <Link to="/register">Register</Link> 
+                        New to this website? please <Link to="/register">Register</Link>
                     </p>
                 </div>
             </div>
